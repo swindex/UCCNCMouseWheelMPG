@@ -5,6 +5,7 @@ This is a plugin for UCCNC Motion Control Software that allows you to control X,
 ## WARNING:
 
 The author holds no responsibility for any damage, injury or harm caused by use or misuse of this software product.
+This software may or may not have been tested. Use it at your own risk.
 Software is shipped AS-IS
 
 ![](Docs/screenshot.png)
@@ -18,4 +19,5 @@ Grab the latest copy of the MouseMPG.dll here:
 
 ## Contributing
 
-Pull requests are welcome
+Yes, it is in god-awful vb.net that no self-respecting software developer wants to use.
+So. Pull requests are welcome!
