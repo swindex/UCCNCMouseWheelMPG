@@ -4,3 +4,7 @@
 
 /.vs/MouseWheelMPG/v15
 /.vs/UCCNCplugintest/v15
+/obj/Release
+/bin/Release/UCCNC.exe
+/bin/Release/UCCNC.exe.config
+/bin/Release/Plugininterface.dll
