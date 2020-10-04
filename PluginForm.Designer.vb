@@ -26,6 +26,7 @@ Partial Class PluginForm
         Me.BTN_0001 = New System.Windows.Forms.Button()
         Me.BTN_001 = New System.Windows.Forms.Button()
         Me.BTN_01 = New System.Windows.Forms.Button()
+        Me.BTN_1 = New System.Windows.Forms.Button()
         Me.BTN_X = New System.Windows.Forms.Button()
         Me.BTN_Y = New System.Windows.Forms.Button()
         Me.BTN_Z = New System.Windows.Forms.Button()
@@ -47,13 +48,15 @@ Partial Class PluginForm
         Me.TableLayoutPanel1.Controls.Add(Me.BTN_0001, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.BTN_001, 0, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.BTN_01, 0, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.BTN_1, 0, 3)
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 48)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 3
+        Me.TableLayoutPanel1.RowCount = 4
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(65, 105)
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(65, 140)
         Me.TableLayoutPanel1.TabIndex = 1
         '
         'BTN_0001
@@ -94,6 +97,19 @@ Partial Class PluginForm
         Me.BTN_01.TabIndex = 0
         Me.BTN_01.Text = "0.100"
         Me.BTN_01.UseVisualStyleBackColor = True
+        '
+        'BTN_1
+        '
+        Me.BTN_1.AutoSize = True
+        Me.BTN_1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.BTN_1.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BTN_1.ForeColor = System.Drawing.Color.White
+        Me.BTN_1.Location = New System.Drawing.Point(3, 108)
+        Me.BTN_1.Name = "BTN_1"
+        Me.BTN_1.Size = New System.Drawing.Size(59, 29)
+        Me.BTN_1.TabIndex = 0
+        Me.BTN_1.Text = "1.000"
+        Me.BTN_1.UseVisualStyleBackColor = True
         '
         'BTN_X
         '
@@ -171,7 +187,7 @@ Partial Class PluginForm
         Me.TableLayoutPanel3.RowCount = 2
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(206, 156)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(206, 191)
         Me.TableLayoutPanel3.TabIndex = 3
         '
         'MPG_BOX
@@ -181,7 +197,7 @@ Partial Class PluginForm
         Me.MPG_BOX.Image = Global.MouseMPG.My.Resources.Resources.mpg
         Me.MPG_BOX.Location = New System.Drawing.Point(74, 48)
         Me.MPG_BOX.Name = "MPG_BOX"
-        Me.MPG_BOX.Size = New System.Drawing.Size(129, 105)
+        Me.MPG_BOX.Size = New System.Drawing.Size(129, 140)
         Me.MPG_BOX.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.MPG_BOX.TabIndex = 3
         Me.MPG_BOX.TabStop = False
@@ -222,4 +238,5 @@ Partial Class PluginForm
     Friend WithEvents TableLayoutPanel2 As Windows.Forms.TableLayoutPanel
     Friend WithEvents TableLayoutPanel3 As Windows.Forms.TableLayoutPanel
     Friend WithEvents MPG_BOX As Windows.Forms.PictureBox
+    Friend WithEvents BTN_1 As Windows.Forms.Button
 End Class

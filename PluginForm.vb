@@ -93,6 +93,8 @@ Friend Class PluginForm
         BTN_0001.BackColor = deftbcolor
         BTN_001.BackColor = deftbcolor
         BTN_01.BackColor = deftbcolor
+        BTN_1.BackColor = deftbcolor
+
 
         BTN_X.BackColor = deftbcolor
         BTN_Y.BackColor = deftbcolor
@@ -106,6 +108,9 @@ Friend Class PluginForm
         End If
         If stp = 0.1 Then
             BTN_01.BackColor = Drawing.Color.Green
+        End If
+        If stp = 1 Then
+            BTN_1.BackColor = Drawing.Color.Green
         End If
 
         If direction = Direction.X Then
@@ -148,6 +153,10 @@ Friend Class PluginForm
 
     Private Sub BTN_01_Click(sender As Object, e As EventArgs) Handles BTN_01.Click
         stp = 0.1
+        updateLabels()
+    End Sub
+    Private Sub BTN_1_Click(sender As Object, e As EventArgs) Handles BTN_1.Click
+        stp = 1
         updateLabels()
     End Sub
 

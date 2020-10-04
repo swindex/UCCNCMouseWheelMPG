@@ -10,4 +10,3 @@ C:\UCCNC\Plugins\Example\VisualBasic\UCCNCpluginNet4\obj\Debug\MouseMPG.pdb
 C:\UCCNC\Plugins\MouseMPG.dll
 C:\UCCNC\Plugins\MouseMPG.pdb
 C:\UCCNC\Plugins\MouseMPG.xml
-C:\UCCNC\Plugins\Example\VisualBasic\UCCNCpluginNet4\obj\Debug\WheelMPG.vbprojAssemblyReference.cache
