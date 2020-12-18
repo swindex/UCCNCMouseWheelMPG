@@ -32,7 +32,9 @@ Partial Class PluginForm
         Me.BTN_Z = New System.Windows.Forms.Button()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.txt_Debug = New System.Windows.Forms.TextBox()
         Me.MPG_BOX = New System.Windows.Forms.PictureBox()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
@@ -176,19 +178,32 @@ Partial Class PluginForm
         '
         Me.TableLayoutPanel3.AutoSize = True
         Me.TableLayoutPanel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.TableLayoutPanel3.ColumnCount = 2
+        Me.TableLayoutPanel3.ColumnCount = 3
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel3.Controls.Add(Me.TableLayoutPanel2, 1, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.TableLayoutPanel1, 0, 1)
         Me.TableLayoutPanel3.Controls.Add(Me.MPG_BOX, 1, 1)
+        Me.TableLayoutPanel3.Controls.Add(Me.txt_Debug, 2, 1)
+        Me.TableLayoutPanel3.Controls.Add(Me.Button1, 0, 0)
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(-1, 3)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
         Me.TableLayoutPanel3.RowCount = 2
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(206, 191)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(451, 191)
         Me.TableLayoutPanel3.TabIndex = 3
+        '
+        'txt_Debug
+        '
+        Me.txt_Debug.Location = New System.Drawing.Point(209, 48)
+        Me.txt_Debug.Multiline = True
+        Me.txt_Debug.Name = "txt_Debug"
+        Me.txt_Debug.ScrollBars = System.Windows.Forms.ScrollBars.Both
+        Me.txt_Debug.Size = New System.Drawing.Size(239, 137)
+        Me.txt_Debug.TabIndex = 4
+        Me.txt_Debug.Visible = False
         '
         'MPG_BOX
         '
@@ -201,6 +216,18 @@ Partial Class PluginForm
         Me.MPG_BOX.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.MPG_BOX.TabIndex = 3
         Me.MPG_BOX.TabStop = False
+        '
+        'Button1
+        '
+        Me.Button1.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Button1.AutoSize = True
+        Me.Button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.Button1.Image = Global.MouseMPG.My.Resources.Resources.cog
+        Me.Button1.Location = New System.Drawing.Point(22, 9)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(27, 26)
+        Me.Button1.TabIndex = 5
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'PluginForm
         '
@@ -239,4 +266,6 @@ Partial Class PluginForm
     Friend WithEvents TableLayoutPanel3 As Windows.Forms.TableLayoutPanel
     Friend WithEvents MPG_BOX As Windows.Forms.PictureBox
     Friend WithEvents BTN_1 As Windows.Forms.Button
+    Friend WithEvents txt_Debug As Windows.Forms.TextBox
+    Friend WithEvents Button1 As Windows.Forms.Button
 End Class

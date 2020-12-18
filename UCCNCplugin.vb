@@ -1,5 +1,8 @@
-﻿Public Class UCCNCplugin
+﻿Imports MouseMPG
+
+Public Class UCCNCplugin
     Friend UC As Plugininterface.Entry
+    Friend WithEvents Settings As Settings
     Friend LoopStop As Boolean
     Friend LoopWorking As Boolean
 
@@ -10,6 +13,7 @@
     ' The parameter is the Plugin interface object which contains all functions prototypes for calls and callbacks.
     Public Sub Init_event(UC As Plugininterface.Entry)
         Me.UC = UC
+        Me.Settings = New Settings(UC)
         MyForm = New PluginForm(Me)
     End Sub
 
@@ -17,7 +21,7 @@
     Public Function Getproperties_event(ByVal Properties As Plugininterface.Entry.Pluginproperties) As Plugininterface.Entry.Pluginproperties
         Properties.author = "Eldar Gerfanov"
         Properties.pluginname = "MouseWheel MPG"
-        ' Properties.pluginversion = "0.0001"
+        Properties.pluginversion = "1.1.0"
         Properties.pluginversion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString ' Get version from Assembly info
         Return Properties
     End Function
@@ -25,8 +29,8 @@
     ' Called from UCCNC when the user presses the Configuration button in the Plugin configuration menu.
     ' Typically the plugin configuration window is shown to the user.
     Public Sub Configure_event()
-        'Dim CForm As New ConfigForm(Me)
-        'CForm.Show()
+        Dim CForm As New ConfigForm(Me)
+        CForm.ShowDialog()
     End Sub
 
     ' Called from UCCNC when the plugin is loaded and started.
@@ -86,48 +90,48 @@
     ' The function can be called by macros or by another plugin
     ' The passed parameter is an object and the return value is also an object
     Public Function Informplugin_event(Message As Object) As Object
-        If Not (MyForm Is Nothing Or MyForm.IsDisposed) Then
-            If TypeOf Message Is String Then
-                Dim receivedstr As String = Message
-                MsgBox("Informplugin message received by Plugintest! Message was: " + receivedstr)
-            End If
-        End If
-        Dim returnstr As String = "Return string by Plugintest"
-        Return returnstr
+        'If Not (MyForm Is Nothing Or MyForm.IsDisposed) Then
+        '    If TypeOf Message Is String Then
+        '        Dim receivedstr As String = Message
+        '        MsgBox("Informplugin message received by Plugintest! Message was: " + receivedstr)
+        '    End If
+        'End If
+        'Dim returnstr As String = "Return string by Plugintest"
+        'Return returnstr
     End Function
 
     ' This is a function call made to all plugin dll files
     ' The function can be called by macros or by another plugin
     ' The passed parameter is an object and there is no return value
     Public Sub Informplugins_event(Message As Object)
-        If Not (MyForm Is Nothing Or MyForm.IsDisposed) Then
-            If TypeOf Message Is String Then
-                Dim receivedstr As String = Message
-                MsgBox("Informplugins message received by Plugintest! Message was: " + receivedstr)
-            End If
-        End If
+        'If Not (MyForm Is Nothing Or MyForm.IsDisposed) Then
+        '    If TypeOf Message Is String Then
+        '        Dim receivedstr As String = Message
+        '        MsgBox("Informplugins message received by Plugintest! Message was: " + receivedstr)
+        '    End If
+        'End If
     End Sub
 
     ' Called when the user presses a button on the UCCNC GUI or if a Callbutton function is executed.
     ' The int buttonnumber parameter is the ID of the caller button.
     ' The bool onscreen parameter is true if the button was pressed on the GUI and is false if the Callbutton function was called.
     Public Sub Buttonpress_event(ByVal ButtonNumber As Integer, ByVal OnScreen As Boolean)
-        If OnScreen Then
-            If ButtonNumber = 128 Then
-                ' Code...
-            End If
-        End If
+        'If OnScreen Then
+        '    If ButtonNumber = 128 Then
+        '        ' Code...
+        '    End If
+        'End If
     End Sub
 
     ' Called when the user clicks and enters a Textfield on the screen
     ' The labelnumber parameter is the ID of the accessed Textfield
     ' The bool Ismainscreen parameter is true is the Textfield is on the main screen and false if it is on the jog screen
     Public Sub Textfieldclick_event(labelnumber As Integer, Ismainscreen As Boolean)
-        If Ismainscreen Then
-            If labelnumber = 1000 Then
-                ' Your code here...
-            End If
-        End If
+        'If Ismainscreen Then
+        '    If labelnumber = 1000 Then
+        '        ' Your code here...
+        '    End If
+        'End If
     End Sub
 
     ' Called when the user enters text into the Textfield and it gets validated
@@ -135,11 +139,11 @@
     ' The bool Ismainscreen parameter is true is the Textfield is on the main screen and false if it is on the jog screen.
     ' The text parameter is the text entered and validated by the user
     Public Sub Textfieldtexttyped_event(labelnumber As Integer, Ismainscreen As Boolean, text As String)
-        If Ismainscreen Then
-            If labelnumber = 1000 Then
-                ' Your code here...
-            End If
-        End If
+        'If Ismainscreen Then
+        '    If labelnumber = 1000 Then
+        '        ' Your code here...
+        '    End If
+        'End If
     End Sub
 
     ' Called when the user presses the Cycle start button and before the Cycle starts
@@ -159,4 +163,49 @@
 
     ' Public Function Get_event(pluginfilename As String, exec As Executer) As Boolean ---->>>> ?
 
+End Class
+
+
+Public Class Settings
+    Property imperial As Boolean = True
+    Property feedrate As Double = 50
+
+    Property UC As Plugininterface.Entry
+
+    Public Event SettingsChanged()
+
+    Public Sub New(UC As Plugininterface.Entry)
+        Me.UC = UC
+        Try
+            '#If Not DEBUG Then
+            Dim v As String = ""
+
+            v = UC.Readkey("MouseWheelMPG", "imperial", "0")
+            If v = "0" Then
+                imperial = False
+            End If
+
+            v = UC.Readkey("MouseWheelMPG", "feedrate", "")
+            If Not Double.TryParse(v, feedrate) Then
+                feedrate = 50
+            End If
+            '#End If
+
+        Catch ex As Exception
+            Debug.WriteLine(ex.Message)
+        End Try
+
+    End Sub
+
+    Friend Sub Save()
+        Try
+            '#If Not DEBUG Then
+            UC.Writekey("MouseWheelMPG", "imperial", If(imperial, "1", "0"))
+            UC.Writekey("MouseWheelMPG", "feedrate", feedrate.ToString)
+            RaiseEvent SettingsChanged()
+            '#End If
+        Catch ex As Exception
+            Debug.WriteLine(ex.Message)
+        End Try
+    End Sub
 End Class

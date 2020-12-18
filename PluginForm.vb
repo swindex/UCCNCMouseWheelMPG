@@ -4,6 +4,7 @@ Imports System.Windows.Forms
 Friend Class PluginForm
     Private UC As Plugininterface.Entry
     Dim PluginMain As UCCNCplugin
+    Friend WithEvents Settings As Settings
     Dim MustClose As Boolean = False
     Dim WheelDelta As Integer = 120
     Dim zpos As Double = 0
@@ -12,10 +13,13 @@ Friend Class PluginForm
 
     Dim deftbcolor As Drawing.Color
 
+
+
     Public Sub New(CallerPluginMain As UCCNCplugin)
         Me.UC = CallerPluginMain.UC
         Me.PluginMain = CallerPluginMain
         InitializeComponent()
+
     End Sub
 
     Public Shared Sub Main()
@@ -24,8 +28,26 @@ Friend Class PluginForm
 
     Private Sub PluginForm_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         WheelDelta = SystemInformation.MouseWheelScrollDelta
+
+
         deftbcolor = BTN_X.BackColor
+
+        LoadSettings()
+
         updateLabels()
+
+    End Sub
+
+    Public Sub LoadSettings() Handles Settings.SettingsChanged
+        Me.Settings = Me.PluginMain.Settings
+
+        If Me.Settings.imperial Then
+            BTN_0001.Visible = True
+            BTN_1.Visible = False
+        Else
+            BTN_0001.Visible = False
+            BTN_1.Visible = True
+        End If
     End Sub
 
     Private Sub PluginForm_FormClosing(sender As System.Object, e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
@@ -41,8 +63,15 @@ Friend Class PluginForm
             ' Form is closing here...
         End If
     End Sub
+    Delegate Sub CloseformDeletage()
 
     Public Sub Closeform()
+
+        If Me.InvokeRequired Then
+            Me.Invoke(New CloseformDeletage(AddressOf Closeform))
+            Return
+        End If
+
         ' Stop the Loop event to update the GUI
         PluginMain.LoopStop = True
         ' Wait until the loop exited
@@ -68,25 +97,24 @@ Friend Class PluginForm
     End Sub
 
     Private Sub jog(steps As Integer)
-        If UC.IsMoving Or UC.Getfield(False, 54) Then
+        Dim dist As Double = steps * stp
+
+        UC.AddLinearMoveRel(CInt(direction), stp, Math.Abs(steps), Settings.feedrate, steps < 0)
+
+        updateLabels()
+
+    End Sub
+
+
+
+    Delegate Sub DebugWriteLineDelegate(text As String)
+
+    Sub DebugWriteLine(text As String)
+        If (Me.InvokeRequired) Then
+            Me.Invoke(New DebugWriteLineDelegate(AddressOf DebugWriteLine), text)
             Return
         End If
-
-        Dim dist As Double = steps * stp
-        zpos = zpos + dist
-        If direction = Direction.X Then
-            Dim v = UC.GetXmachpos()
-            UC.Code("G53 X" & v + dist)
-        End If
-        If direction = Direction.Y Then
-            Dim v = UC.GetYmachpos()
-            UC.Code("G53 Y" & v + dist)
-        End If
-        If direction = Direction.Z Then
-            Dim v = UC.GetZmachpos()
-            UC.Code("G53 Z" & v + dist)
-        End If
-        updateLabels()
+        txt_Debug.AppendText(text & vbNewLine)
     End Sub
 
     Private Sub updateLabels()
@@ -168,6 +196,17 @@ Friend Class PluginForm
         Dim steps As Integer = e.Delta / WheelDelta
         jog(steps)
     End Sub
+
+    Private Sub PluginForm_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+        LoadSettings()
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim f = New ConfigForm(Me.PluginMain)
+        f.ShowDialog()
+        LoadSettings()
+    End Sub
 End Class
 
 Public Enum Direction
@@ -175,3 +214,8 @@ Public Enum Direction
     Y
     Z
 End Enum
+
+Public Class Move
+    Property direction As Direction
+    Property distance As Double
+End Class

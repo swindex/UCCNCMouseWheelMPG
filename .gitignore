@@ -2,9 +2,9 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/MouseWheelMPG/v15
-/.vs/UCCNCplugintest/v15
-/obj/Release
+/.vs/
+/obj/
+/bin/Debug/
 /bin/Release/UCCNC.exe
 /bin/Release/UCCNC.exe.config
 /bin/Release/Plugininterface.dll
