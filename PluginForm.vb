@@ -8,7 +8,7 @@ Friend Class PluginForm
     Dim MustClose As Boolean = False
     Dim WheelDelta As Integer = 120
     Dim zpos As Double = 0
-    Dim stp As Double = 0.001
+    Dim stp As Double = 0.0001
     Dim direction As Direction = Direction.X
 
     Dim deftbcolor As Drawing.Color
@@ -30,7 +30,7 @@ Friend Class PluginForm
         WheelDelta = SystemInformation.MouseWheelScrollDelta
 
 
-        deftbcolor = BTN_X.BackColor
+        deftbcolor = BTN_Settings.BackColor
 
         LoadSettings()
 
@@ -42,12 +42,18 @@ Friend Class PluginForm
         Me.Settings = Me.PluginMain.Settings
 
         If Me.Settings.imperial Then
-            BTN_0001.Visible = True
+            BTN_00001.Visible = True
             BTN_1.Visible = False
+
+            If stp >= 1 Then stp = 0.1
         Else
-            BTN_0001.Visible = False
+            BTN_00001.Visible = False
             BTN_1.Visible = True
+
+            If stp = 0.0001 Then stp = 0.001
         End If
+
+        updateLabels()
     End Sub
 
     Private Sub PluginForm_FormClosing(sender As System.Object, e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
@@ -118,6 +124,7 @@ Friend Class PluginForm
     End Sub
 
     Private Sub updateLabels()
+        BTN_00001.BackColor = deftbcolor
         BTN_0001.BackColor = deftbcolor
         BTN_001.BackColor = deftbcolor
         BTN_01.BackColor = deftbcolor
@@ -128,6 +135,9 @@ Friend Class PluginForm
         BTN_Y.BackColor = deftbcolor
         BTN_Z.BackColor = deftbcolor
 
+        If stp = 0.0001 Then
+            BTN_00001.BackColor = Drawing.Color.Green
+        End If
         If stp = 0.001 Then
             BTN_0001.BackColor = Drawing.Color.Green
         End If
@@ -169,6 +179,11 @@ Friend Class PluginForm
         updateLabels()
     End Sub
 
+    Private Sub BTN_00001_Click(sender As Object, e As EventArgs) Handles BTN_00001.Click
+        stp = 0.0001
+        updateLabels()
+    End Sub
+
     Private Sub BTN_0001_Click(sender As Object, e As EventArgs) Handles BTN_0001.Click
         stp = 0.001
         updateLabels()
@@ -202,11 +217,12 @@ Friend Class PluginForm
 
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles BTN_Settings.Click
         Dim f = New ConfigForm(Me.PluginMain)
         f.ShowDialog()
         LoadSettings()
     End Sub
+
 End Class
 
 Public Enum Direction

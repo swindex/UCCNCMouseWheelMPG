@@ -21,7 +21,7 @@ Public Class UCCNCplugin
     Public Function Getproperties_event(ByVal Properties As Plugininterface.Entry.Pluginproperties) As Plugininterface.Entry.Pluginproperties
         Properties.author = "Eldar Gerfanov"
         Properties.pluginname = "MouseWheel MPG"
-        Properties.pluginversion = "1.1.0"
+        Properties.pluginversion = "1.1.1"
         Properties.pluginversion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString ' Get version from Assembly info
         Return Properties
     End Function
